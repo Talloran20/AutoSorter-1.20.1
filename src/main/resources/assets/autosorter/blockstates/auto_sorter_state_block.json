@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "autosorter:block/auto_sorter_state_block",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "autosorter:block/auto_sorter_state_block",
+      "y": 0
+    },
+    "facing=west": {
+      "model": "autosorter:block/auto_sorter_state_block",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "autosorter:block/auto_sorter_state_block",
+      "y": 270
+    }
+  }
+}

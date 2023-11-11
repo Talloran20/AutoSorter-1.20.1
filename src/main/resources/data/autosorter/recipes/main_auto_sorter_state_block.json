@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "nSn",
+    "DxC",
+    "nDn"
+  ],
+  "key": {
+    "n": {
+      "item": "minecraft:andesite"
+    },
+    "D": {
+      "item": "minecraft:spruce_planks"
+    },
+    "x": {
+      "item": "minecraft:hopper"
+    },
+    "S": {
+      "item": "minecraft:sculk_sensor"
+    },
+    "C": {
+      "item": "minecraft:copper_block"
+    }
+  },
+  "result": {
+    "item": "autosorter:main_auto_sorter_state_block",
+    "count": 1
+  }
+}
