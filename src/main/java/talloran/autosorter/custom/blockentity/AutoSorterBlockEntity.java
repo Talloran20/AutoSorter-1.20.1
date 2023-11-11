@@ -96,7 +96,7 @@ public class AutoSorterBlockEntity extends BlockEntity implements ExtendedScreen
     private void AutoSorterBlockEntityInventory(AutoSorterBlockEntity blockEntity){
         ASblockEntity = blockEntity;
     }
-    private AutoSorterBlockEntity ASblockEntity = null;
+    private static AutoSorterBlockEntity ASblockEntity = null;
 
     // медот выполняется каждый тик
     public static void tick(World world, BlockPos pos, BlockState state, AutoSorterBlockEntity blockEntity) {
