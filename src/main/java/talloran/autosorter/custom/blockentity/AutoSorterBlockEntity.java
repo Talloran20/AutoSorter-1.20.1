@@ -194,12 +194,12 @@ public class AutoSorterBlockEntity extends BlockEntity implements ExtendedScreen
         BlockState blockState = world.getBlockState(blockPos);
         Block block = blockState.getBlock();
         if (block instanceof InventoryProvider) {
-            inventory = ((InventoryProvider)((Object)block)).getInventory(blockState, world, blockPos);
-        } else if (blockState.hasBlockEntity() && (blockEntity = world.getBlockEntity(blockPos)) instanceof Inventory && (inventory = (Inventory)((Object)blockEntity)) instanceof ChestBlockEntity && block instanceof ChestBlock) {
+            inventory = ((InventoryProvider)(block)).getInventory(blockState, world, blockPos);
+        } else if (blockState.hasBlockEntity() && (blockEntity = world.getBlockEntity(blockPos)) instanceof Inventory && (inventory = (Inventory)(blockEntity)) instanceof ChestBlockEntity && block instanceof ChestBlock) {
             inventory = ChestBlock.getInventory((ChestBlock)block, blockState, world, blockPos, true);
         }
         if (inventory == null && !(list = world.getOtherEntities(null, new Box(x - 0.5, y - 0.5, z - 0.5, x + 0.5, y + 0.5, z + 0.5), EntityPredicates.VALID_INVENTORIES)).isEmpty()) {
-            inventory = (Inventory)((Object)list.get(world.random.nextInt(list.size())));
+            inventory = (Inventory)(list.get(world.random.nextInt(list.size())));
         }
         return inventory;
     }
@@ -208,13 +208,13 @@ public class AutoSorterBlockEntity extends BlockEntity implements ExtendedScreen
     public static Inventory getInventoryAt(World world, BlockPos pos, BlockState state) {
         return switch (state.get(Properties.HORIZONTAL_FACING)) {
             case EAST ->
-                    AutoSorterBlockEntity.getInventoryAt(world, (double) pos.getX() + 1, (double) pos.getY(), (double) pos.getZ());
+                    AutoSorterBlockEntity.getInventoryAt(world, (double) pos.getX() + 1, pos.getY(), pos.getZ());
             case SOUTH ->
-                    AutoSorterBlockEntity.getInventoryAt(world, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ() + 1);
+                    AutoSorterBlockEntity.getInventoryAt(world, pos.getX(), pos.getY(), (double) pos.getZ() + 1);
             case WEST ->
-                    AutoSorterBlockEntity.getInventoryAt(world, (double) pos.getX() - 1, (double) pos.getY(), (double) pos.getZ());
+                    AutoSorterBlockEntity.getInventoryAt(world, (double) pos.getX() - 1, pos.getY(), pos.getZ());
             default ->
-                    AutoSorterBlockEntity.getInventoryAt(world, (double) pos.getX(), (double) pos.getY(), (double) pos.getZ() - 1);
+                    AutoSorterBlockEntity.getInventoryAt(world, pos.getX(), pos.getY(), (double) pos.getZ() - 1);
         };
     }
 
