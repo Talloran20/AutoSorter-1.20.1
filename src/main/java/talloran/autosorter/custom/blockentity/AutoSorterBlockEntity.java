@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
@@ -30,12 +31,12 @@ import org.jetbrains.annotations.Nullable;
 import talloran.autosorter.Autosorter;
 import talloran.autosorter.screen.AutoSorterScreenHandler;
 
+
 import java.util.List;
 
 public class AutoSorterBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory {
     public static ItemStack MainSorterItemStack = ItemStack.EMPTY;
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(56, ItemStack.EMPTY);
-
     protected final PropertyDelegate propertyDelegate;
     public AutoSorterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntity.AUTO_SORTER_BLOCK_ENTITY, pos, state);
@@ -93,22 +94,28 @@ public class AutoSorterBlockEntity extends BlockEntity implements ExtendedScreen
 
 
     //--------------------------------------------------------------------
-    private void AutoSorterBlockEntityInventory(AutoSorterBlockEntity blockEntity){
-        ASblockEntity = blockEntity;
-    }
-    private static AutoSorterBlockEntity ASblockEntity = null;
+
 
     // медот выполняется каждый тик
-    public static void tick(World world, BlockPos pos, BlockState state, AutoSorterBlockEntity blockEntity) {
+    private static int tickInt;
+    public void tick(World world, BlockPos pos, BlockState state, AutoSorterBlockEntity blockEntity) {
         if (world.isClient) {
            return;
         }
-        blockEntity.AutoSorterBlockEntityInventory(blockEntity);
+        tickInt++;
+        if (tickInt > 39){
+            tickInt = 0;
+            MainAutoSorterBlockEntity.AddSorterItems(blockEntity.inventory);
+            //Autosorter.LOGGER.info("\n" + MainAutoSorterBlockEntity.SorterItems + "\n");
+        }
+
+
         if (MainSorterItemStack.getItem() != Items.AIR) {
             if (blockEntity.EmplySlot(world, pos, state)){
                 Sorter(MainSorterItemStack, world, pos, state, blockEntity);
             }
         }
+
     }
 
     //есть ли пустые слоты
@@ -124,17 +131,6 @@ public class AutoSorterBlockEntity extends BlockEntity implements ExtendedScreen
         return false;
     }
 
-
-    // первичный поиск совпадений
-    public static boolean FirstSorter(ItemStack itemStack){
-        Autosorter.LOGGER.info("" + ASblockEntity.inventory);
-        for (int i = 0; i < ASblockEntity.inventory.size(); ++i){
-            if (!itemStack.isEmpty() && itemStack.getItem() == ASblockEntity.inventory.get(i).getItem()){
-                return true;
-            }
-        }
-        return false;
-    }
 
     // поиск совпадений
     private static void Sorter(ItemStack stack, World world, BlockPos pos, BlockState state, AutoSorterBlockEntity blockEntity) {
@@ -175,7 +171,6 @@ public class AutoSorterBlockEntity extends BlockEntity implements ExtendedScreen
         int j = Math.min(stack.getCount(), i);
         stack.decrement(j);
         itemStack.increment(j);
-        Autosorter.LOGGER.info(stack + " " + itemStack);
 
         return itemStack;
     }

@@ -2,6 +2,7 @@ package talloran.autosorter.screen;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -19,8 +20,6 @@ public class AutoSorterScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     private final PropertyDelegate propertyDelegate;
     public final AutoSorterBlockEntity blockEntity;
-
-    private ButtonWidget button1;
 
     public AutoSorterScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf){
         this(syncId, playerInventory, playerInventory.player.getWorld().getBlockEntity(buf.readBlockPos()),
@@ -49,7 +48,6 @@ public class AutoSorterScreenHandler extends ScreenHandler {
         this.addSlot(new filterSlot(inventory, 55, 235, 18));
 
 
-
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
         addProperties(PropertyDelegate);
@@ -63,8 +61,8 @@ public class AutoSorterScreenHandler extends ScreenHandler {
 
 
 
-    //быстрое перемешение предметов передвигается сразу стак,
-    // а должен только 1 предмет из стака.
+    //быстрое перемешение предметов
+    // передвигается сразу стак, а должен только 1 предмет из стака
     // Кто знает как пофиксить - можете пофиксить, буду благодарен
     @Override
     public ItemStack quickMove(PlayerEntity player, int Slot) {
